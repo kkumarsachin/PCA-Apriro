@@ -1,0 +1,58 @@
+s= '22:22:21'
+t = '22:22:23'
+s_split = s.split(':')
+s_join = ''.join(s_split)
+s_array = [int(i) for i in s_split]
+t_split = t.split(':')
+t_join = ''.join(t_split)
+t_array = [int(i) for i in t_split]
+q_array = [00,00,00]
+sec = 0
+min = 0
+table = []
+table.append(s_split)
+
+while(t_join !=s_join):
+    for index,value in enumerate(s_array[::-1]):
+        if index ==0 and value !=59:
+            q_array[index] = value+1
+        elif index==0 and value==59:
+            q_array[index] = 0
+            sec = 1
+        elif index==1 and sec==1:
+            if value== 59:
+                q_array[index] = 0
+                min =1
+            else:
+                q_array[index] = value+1
+        elif index==1 and sec==0:
+            q_array[index] = value
+            
+        elif index==2 and min==1:
+            if value== 23:
+                q_array[index] = 0
+                min =1
+            else:
+                q_array[index] = value+1
+        elif index==2 and min==0:
+            q_array[index] = value
+
+        reversed_q_array = q_array[::-1]
+        str_reversed_q_array = []
+        for x in reversed_q_array:
+            if len(str(x))==1:
+                str_reversed_q_array.append('0'+str(x))
+            else:
+            	str_reversed_q_array.append(str(x))
+        s_join = ''.join(str_reversed_q_array)
+        s_array = reversed_q_array
+    sec = 0
+    min =0
+    table.append(str_reversed_q_array)
+
+counter = 0
+for j in table:
+    if len(set(''.join(j)))<=2:
+        counter = counter+1
+print(counter)
+                
